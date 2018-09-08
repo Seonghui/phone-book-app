@@ -26,11 +26,34 @@ class App extends Component {
     ]
   };
 
+  handleCreate = (data) => {
+    const { list } = this.state;
+    this.setState({
+      list: list.concat({
+        id: this.id++,
+        ...data
+      })
+    })
+  }
+
+  handleRemove = (id) => {
+    const { list } = this.state;
+    this.setState({
+      list: list.filter(item => 
+        item.id !== id
+        )
+      })
+  }
+
   render() {
     return (
       <div className="App">
-        <PhoneHeader />
-        <PhoneMain list={this.state.list}/>
+        <PhoneHeader onCreate={this.handleCreate}/>
+        <PhoneMain 
+          list={this.state.list}
+          onRemove={this.handleRemove}
+          onUpdate={this.handleUpdate}
+        />
       </div>
     );
   }
